@@ -43,4 +43,5 @@ try:
 except ValueError:
     st.error("Please provide a valid YouTube link.")
 except Exception as e:
-    st.error(f"Sorry, this video cannot be downloaded. Error: {e}")
+    st.error(f"Sorry, this video cannot be downloaded.")
+    # st.error(f"Sorry, this video cannot be downloaded. Error: {e}")
