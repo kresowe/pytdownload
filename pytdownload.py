@@ -13,7 +13,7 @@ def valid_yt_url(inp: str) -> bool:
 st.write("""
 # Simple YouTube Downloader
 
-### based on [pytube](https://pytube.io/en/latest/)""")
+### based on [pytubefix](https://github.com/JuanBindez/pytubefix)""")
 link = st.text_input("Link to video")
 file_name = st.text_input("File name")
 mode = st.radio(
