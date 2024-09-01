@@ -1,5 +1,5 @@
 import streamlit as st
-from pytube import YouTube
+from pytubefix import YouTube
 import os
 import re
 import random
@@ -29,17 +29,19 @@ try:
         if mode == "video + audio":
             tmp_file_name = tmp_name + '.mp4'
             file_name = file_name + '.mp4'
-            yt.streams.filter(progressive=True, file_extension='mp4').first().download(
-                'downloads', tmp_file_name)
+            ys = yt.streams.get_highest_resolution()
+            ys.download(output_path='downloads', filename=tmp_file_name)
         else:
             tmp_file_name = tmp_name + '.mp3'
             file_name = file_name + '.mp3'
-            yt.streams.filter(only_audio=True).order_by('abr').desc().first().download('downloads', tmp_file_name)
+            ys = yt.streams.get_audio_only()
+            ys.download(output_path='downloads', filename=tmp_file_name)
 
         with open(os.path.join('downloads', tmp_file_name), 'rb') as f:
             st.download_button('Download', f, file_name=file_name)
             os.remove(os.path.join('downloads', tmp_file_name))
 except ValueError:
     st.error("Please provide a valid YouTube link.")
-except Exception:
-    st.error("Sorry, this video cannot be downloaded.")
+except Exception as e:
+    st.error(f"Sorry, this video cannot be downloaded.")
+    # st.error(f"Sorry, this video cannot be downloaded. Error: {e}")
